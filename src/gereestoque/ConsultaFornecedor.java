@@ -6,6 +6,10 @@
 
 package gereestoque;
 
+import DAO.FornecedorDAO;
+import DAO.ProdutoDAO;
+import model.Fornecedor;
+
 /**
  *
  * @author tamara
@@ -18,7 +22,13 @@ public class ConsultaFornecedor extends javax.swing.JFrame {
     public ConsultaFornecedor() {
         initComponents();
     }
-
+    public void Limpar(){
+        con_nomeFor.setText("");
+        con_cnpjFor.setText("");
+        con_telFor.setText("");
+        con_EndFor.setText("");
+        con_emailFor.setText("");
+      }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,36 +40,217 @@ public class ConsultaFornecedor extends javax.swing.JFrame {
 
         busca_for = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        con_nomeFor = new javax.swing.JTextField();
+        con_cnpjFor = new javax.swing.JTextField();
+        con_telFor = new javax.swing.JTextField();
+        con_emailFor = new javax.swing.JTextField();
+        con_EndFor = new javax.swing.JTextField();
+        Con_For = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        btn_cadLimpar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        busca_for.setText("jTextField1");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/pesquisa.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jButton1.setText("jButton1");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setText("Código:");
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel5.setText("Endereço:");
+
+        con_nomeFor.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        con_cnpjFor.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        con_telFor.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        con_telFor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                con_telForActionPerformed(evt);
+            }
+        });
+
+        con_emailFor.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        con_EndFor.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        con_EndFor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                con_EndForActionPerformed(evt);
+            }
+        });
+
+        Con_For.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alterar.png"))); // NOI18N
+        Con_For.setText("Alterar");
+        Con_For.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Con_ForMouseClicked(evt);
+            }
+        });
+        Con_For.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Con_ForActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel2.setText("Nome:");
+
+        btn_cadLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/limpar.png"))); // NOI18N
+        btn_cadLimpar.setText("Limpar");
+        btn_cadLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cadLimparActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel3.setText("CNPJ:");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel4.setText("Telefone:");
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel6.setText("E-mail:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(393, Short.MAX_VALUE)
-                .addComponent(busca_for, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addGap(54, 54, 54))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(busca_for, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(con_emailFor, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 319, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(btn_cadLimpar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(Con_For))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(con_nomeFor)
+                                            .addComponent(con_EndFor))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel4)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(con_telFor, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel3)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(con_cnpjFor, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(6, 6, 6)))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(jLabel1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(busca_for, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(21, 21, 21)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(busca_for, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addContainerGap(330, Short.MAX_VALUE))
+                    .addComponent(jLabel2)
+                    .addComponent(con_nomeFor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(con_cnpjFor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(13, 13, 13)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(con_EndFor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(con_telFor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(con_emailFor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Con_For)
+                    .addComponent(btn_cadLimpar))
+                .addGap(89, 89, 89))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Fornecedor f = new Fornecedor();
+        Integer num = Integer.parseInt(busca_for.getText());
+        FornecedorDAO dao = new FornecedorDAO();
+        dao.buscaFornecedor(num);
+        con_nomeFor.setText(f.nome);
+        con_cnpjFor.setText(f.cnpj);
+        con_emailFor.setText(f.email);
+        con_telFor.setText(f.tel);
+        con_EndFor.setText(f.endereco);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void con_telForActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_con_telForActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_con_telForActionPerformed
+
+    private void con_EndForActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_con_EndForActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_con_EndForActionPerformed
+
+    private void Con_ForMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Con_ForMouseClicked
+        String nome = this.con_nomeFor.getText();
+        String cnpj = this.con_cnpjFor.getText();
+        String tel = this.con_telFor.getText();
+        String endereco = this.con_EndFor.getText();
+        String email = this.con_emailFor.getText();
+
+        //int codFor =  Integer.parseInt(this.cad_codForP.getText());
+    }//GEN-LAST:event_Con_ForMouseClicked
+
+    private void Con_ForActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Con_ForActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Con_ForActionPerformed
+
+    private void btn_cadLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cadLimparActionPerformed
+        // TODO add your handling code here:
+        this.Limpar();
+    }//GEN-LAST:event_btn_cadLimparActionPerformed
 
     /**
      * @param args the command line arguments
@@ -97,7 +288,21 @@ public class ConsultaFornecedor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Con_For;
+    private javax.swing.JButton btn_cadLimpar;
     private javax.swing.JTextField busca_for;
+    private javax.swing.JTextField con_EndFor;
+    private javax.swing.JTextField con_cnpjFor;
+    private javax.swing.JTextField con_emailFor;
+    private javax.swing.JTextField con_nomeFor;
+    private javax.swing.JTextField con_telFor;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }

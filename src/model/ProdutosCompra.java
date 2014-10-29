@@ -4,21 +4,22 @@
  * and open the template in the editor.
  */
 
-package model;
+package iterator;
 
+import iterator.IteradorListaDeProdutos;
+import interfaces.AgregadoDeProdutos;
 import java.util.ArrayList;
+import model.Produto;
 
 /**
  *
  * @author tamara
  */
 public class ProdutosCompra implements AgregadoDeProdutos {
-    Produto p;
-    static ArrayList<Produto> lista = new ArrayList<>();
-    public ProdutosCompra(Produto p){
-        lista.add(p);
-    }
+    public static ArrayList<Produto> lista = new ArrayList<>();
+   
+    
      public IteradorListaDeProdutos criarIterator() {
-        return new IteradorListaDeProdutos(lista);
+        return new IteradorListaDeProdutos(lista) {};
     }
 }

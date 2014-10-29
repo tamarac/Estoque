@@ -7,16 +7,18 @@
 package gereestoque;
 
 import DAO.ProdutoDAO;
-import java.util.ArrayList;
 import model.Produto;
-import model.ProdutosCompra;
+import iterator.ProdutosCompra;
+
 /**
  *
  * @author tamara
  */
 public class ItensVenda extends javax.swing.JFrame {
-    ProdutosCompra pc;
+    ProdutosCompra pc = new ProdutosCompra();
+
     Produto p;
+    private int cod;
     /**
      * Creates new form ItensVenda
      */
@@ -38,6 +40,11 @@ public class ItensVenda extends javax.swing.JFrame {
         con_nome = new javax.swing.JLabel();
         add_p = new javax.swing.JButton();
         fimCompra = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        conNome = new javax.swing.JLabel();
+        con_preco = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,6 +61,11 @@ public class ItensVenda extends javax.swing.JFrame {
         });
 
         add_p.setText("Adicionar");
+        add_p.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                add_pMouseClicked(evt);
+            }
+        });
         add_p.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 add_pActionPerformed(evt);
@@ -61,50 +73,83 @@ public class ItensVenda extends javax.swing.JFrame {
         });
 
         fimCompra.setText("Finalizar Compra");
+        fimCompra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                fimCompraMouseClicked(evt);
+            }
+        });
         fimCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fimCompraActionPerformed(evt);
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel1.setText("Nome");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel2.setText("Preço");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setText("Código");
+
+        conNome.setText("jLabel4");
+
+        con_preco.setText("jLabel5");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(fimCompra)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(con_nome))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(con_nome))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(7, 7, 7)
+                                .addComponent(jLabel1))
+                            .addComponent(conNome, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(62, 62, 62)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(con_preco))
+                        .addGap(123, 123, 123)
+                        .addComponent(add_p))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
                         .addComponent(pes_ItemVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pesquisar_itemvenda)))
-                .addContainerGap(182, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(add_p)
-                        .addGap(57, 57, 57))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(fimCompra)
-                        .addGap(22, 22, 22))))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(add_p)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pes_ItemVenda)
+                    .addComponent(pesquisar_itemvenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(38, 38, 38)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(pes_ItemVenda)
-                            .addComponent(pesquisar_itemvenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(68, 68, 68)
-                        .addComponent(con_nome)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 254, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addGap(9, 9, 9)
+                        .addComponent(con_nome))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(conNome)
+                            .addComponent(con_preco)
+                            .addComponent(add_p))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
                 .addComponent(fimCompra)
                 .addContainerGap())
         );
@@ -122,16 +167,32 @@ public class ItensVenda extends javax.swing.JFrame {
         ProdutoDAO dao = new ProdutoDAO();
        this.p = dao.buscaProduto(num);
         con_nome.setText(Integer.toString(p.codP));
+        conNome.setText(p.nomeP);
+        con_preco.setText(Float.toString(p.preco));
     }//GEN-LAST:event_pesquisar_itemvendaMouseClicked
 
     private void add_pActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_pActionPerformed
         // TODO add your handling code here:
-       pc.ProdutosCompra(Produto p);
+        
+     
     }//GEN-LAST:event_add_pActionPerformed
 
     private void fimCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fimCompraActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fimCompraActionPerformed
+
+    private void fimCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fimCompraMouseClicked
+        // TODO add your handling code here:
+        FinalizarCompra fim = new FinalizarCompra(pc);
+        this.setVisible(false);
+        fim.setVisible(true);
+        
+    }//GEN-LAST:event_fimCompraMouseClicked
+
+    private void add_pMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_pMouseClicked
+        // TODO add your handling code here:
+         pc.lista.add(p);
+    }//GEN-LAST:event_add_pMouseClicked
         
     /**
      * @param args the command line arguments
@@ -170,8 +231,13 @@ public class ItensVenda extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add_p;
+    private javax.swing.JLabel conNome;
     private javax.swing.JLabel con_nome;
+    private javax.swing.JLabel con_preco;
     private javax.swing.JButton fimCompra;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField pes_ItemVenda;
     private javax.swing.JButton pesquisar_itemvenda;
     // End of variables declaration//GEN-END:variables

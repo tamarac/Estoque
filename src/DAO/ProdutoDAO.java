@@ -55,6 +55,8 @@ public class ProdutoDAO {
             
             while (rs.next()){
                 p.codP = rs.getInt("id");
+                p.nomeP = rs.getString("nome");
+                p.preco = rs.getFloat("preco");
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
