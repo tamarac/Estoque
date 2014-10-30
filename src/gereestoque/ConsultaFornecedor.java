@@ -6,8 +6,13 @@
 
 package gereestoque;
 
+import DAO.Conexao;
 import DAO.FornecedorDAO;
 import DAO.ProdutoDAO;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import model.Fornecedor;
 
 /**
@@ -15,7 +20,7 @@ import model.Fornecedor;
  * @author tamara
  */
 public class ConsultaFornecedor extends javax.swing.JFrame {
-
+    Fornecedor f;
     /**
      * Creates new form ConsultaFornecedor
      */
@@ -39,7 +44,7 @@ public class ConsultaFornecedor extends javax.swing.JFrame {
     private void initComponents() {
 
         busca_for = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        pesq_for = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         con_nomeFor = new javax.swing.JTextField();
@@ -57,10 +62,15 @@ public class ConsultaFornecedor extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/pesquisa.png"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        pesq_for.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/pesquisa.png"))); // NOI18N
+        pesq_for.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pesq_forMouseClicked(evt);
+            }
+        });
+        pesq_for.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                pesq_forActionPerformed(evt);
             }
         });
 
@@ -136,7 +146,7 @@ public class ConsultaFornecedor extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(busca_for, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pesq_for, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,7 +192,7 @@ public class ConsultaFornecedor extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(pesq_for, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(busca_for, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(21, 21, 21)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -212,18 +222,10 @@ public class ConsultaFornecedor extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void pesq_forActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesq_forActionPerformed
         // TODO add your handling code here:
-        Fornecedor f = new Fornecedor();
-        Integer num = Integer.parseInt(busca_for.getText());
-        FornecedorDAO dao = new FornecedorDAO();
-        dao.buscaFornecedor(num);
-        con_nomeFor.setText(f.nome);
-        con_cnpjFor.setText(f.cnpj);
-        con_emailFor.setText(f.email);
-        con_telFor.setText(f.tel);
-        con_EndFor.setText(f.endereco);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_pesq_forActionPerformed
 
     private void con_telForActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_con_telForActionPerformed
         // TODO add your handling code here:
@@ -234,13 +236,33 @@ public class ConsultaFornecedor extends javax.swing.JFrame {
     }//GEN-LAST:event_con_EndForActionPerformed
 
     private void Con_ForMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Con_ForMouseClicked
-        String nome = this.con_nomeFor.getText();
-        String cnpj = this.con_cnpjFor.getText();
-        String tel = this.con_telFor.getText();
-        String endereco = this.con_EndFor.getText();
-        String email = this.con_emailFor.getText();
-
-        //int codFor =  Integer.parseInt(this.cad_codForP.getText());
+        f.nome = this.con_nomeFor.getText();
+        f.cnpj = this.con_cnpjFor.getText();
+        f.tel = this.con_telFor.getText();
+        f.endereco = this.con_EndFor.getText();
+        f.email = this.con_emailFor.getText();
+        f.id = Integer.parseInt(this.busca_for.getText());
+        Conexao connection = Conexao.getInstance();
+        String sql = "UPDATE fornecedor SET nome =? ,cnpj =?,tel = ?,endereco = ?, email = ? WHERE id = ? ";
+        try {
+            PreparedStatement stm = connection.getConnection().prepareStatement(sql);
+            stm.setString(1,f.nome);
+            stm.setString(2,f.cnpj);
+            stm.setString(3,f.tel);
+            stm.setString(4,f.endereco);
+            stm.setString(5,f.email);
+            stm.setInt(6,f.id);
+            stm.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Alteração realizada");
+            
+            
+        }catch(SQLException e){
+            System.out.println("ERRO:"+ e);
+        }
+        finally {
+            connection.destroy();
+        } 
+        
     }//GEN-LAST:event_Con_ForMouseClicked
 
     private void Con_ForActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Con_ForActionPerformed
@@ -251,6 +273,19 @@ public class ConsultaFornecedor extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.Limpar();
     }//GEN-LAST:event_btn_cadLimparActionPerformed
+
+    private void pesq_forMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pesq_forMouseClicked
+        // TODO add your handling code here:
+        
+        Integer num = Integer.parseInt(busca_for.getText());
+        FornecedorDAO dao = new FornecedorDAO();
+        this.f = dao.buscaFornecedor(num);
+        con_nomeFor.setText(f.nome);
+        con_cnpjFor.setText(f.cnpj);
+        con_emailFor.setText(f.email);
+        con_telFor.setText(f.tel);
+        con_EndFor.setText(f.endereco);
+    }//GEN-LAST:event_pesq_forMouseClicked
 
     /**
      * @param args the command line arguments
@@ -296,7 +331,6 @@ public class ConsultaFornecedor extends javax.swing.JFrame {
     private javax.swing.JTextField con_emailFor;
     private javax.swing.JTextField con_nomeFor;
     private javax.swing.JTextField con_telFor;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -304,5 +338,6 @@ public class ConsultaFornecedor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JButton pesq_for;
     // End of variables declaration//GEN-END:variables
 }

@@ -20,6 +20,7 @@ import iterator.ProdutosCompra;
 public class FinalizarCompra extends javax.swing.JFrame {
     double preco = 0;
     Loja loja = new Loja();
+    int b,c;
     /**
      * Creates new form FinalizarCompra
      */
@@ -50,9 +51,10 @@ public class FinalizarCompra extends javax.swing.JFrame {
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jLabel1 = new javax.swing.JLabel();
         valTotal = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        cartao = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        boleto = new javax.swing.JRadioButton();
+        jButton1 = new javax.swing.JButton();
 
         jInternalFrame1.setVisible(true);
 
@@ -76,35 +78,43 @@ public class FinalizarCompra extends javax.swing.JFrame {
         valTotal.setForeground(new java.awt.Color(255, 0, 51));
         valTotal.setText("00,00");
 
-        jRadioButton1.setText("Cartão de Crédto");
-        jRadioButton1.addItemListener(new java.awt.event.ItemListener() {
+        cartao.setText("Cartão de Crédto");
+        cartao.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jRadioButton1ItemStateChanged(evt);
+                cartaoItemStateChanged(evt);
             }
         });
-        jRadioButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        cartao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jRadioButton1MouseClicked(evt);
+                cartaoMouseClicked(evt);
             }
         });
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        cartao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                cartaoActionPerformed(evt);
             }
         });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Formas de Pagamento:");
 
-        jRadioButton2.setText("Boleto");
-        jRadioButton2.addItemListener(new java.awt.event.ItemListener() {
+        boleto.setText("Boleto");
+        boleto.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jRadioButton2ItemStateChanged(evt);
+                boletoItemStateChanged(evt);
             }
         });
-        jRadioButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+        boleto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jRadioButton2MouseClicked(evt);
+                boletoMouseClicked(evt);
+            }
+        });
+
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jButton1.setText("Finalizar");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
             }
         });
 
@@ -117,14 +127,18 @@ public class FinalizarCompra extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jRadioButton2)
+                        .addComponent(boleto)
                         .addGap(18, 18, 18)
-                        .addComponent(jRadioButton1))
+                        .addComponent(cartao))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(valTotal)))
                 .addContainerGap(147, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,38 +151,50 @@ public class FinalizarCompra extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton1))
-                .addContainerGap(127, Short.MAX_VALUE))
+                    .addComponent(boleto)
+                    .addComponent(cartao))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(28, 28, 28))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jRadioButton2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioButton2ItemStateChanged
+    private void boletoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_boletoItemStateChanged
         // TODO add your handling code here:
         
-    }//GEN-LAST:event_jRadioButton2ItemStateChanged
+    }//GEN-LAST:event_boletoItemStateChanged
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void cartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cartaoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_cartaoActionPerformed
 
-    private void jRadioButton1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioButton1ItemStateChanged
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jRadioButton1ItemStateChanged
-
-    private void jRadioButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton2MouseClicked
+    private void cartaoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cartaoItemStateChanged
         // TODO add your handling code here:
         
-        loja.executarCompra(preco, new PagamentoBoleto());
-    }//GEN-LAST:event_jRadioButton2MouseClicked
+    }//GEN-LAST:event_cartaoItemStateChanged
 
-    private void jRadioButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton1MouseClicked
+    private void boletoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boletoMouseClicked
         // TODO add your handling code here:
-        loja.executarCompra(preco, (PagamentoCommand) new PagamentoCartaoCredito());
-    }//GEN-LAST:event_jRadioButton1MouseClicked
+        b = 2;
+        
+    }//GEN-LAST:event_boletoMouseClicked
+
+    private void cartaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartaoMouseClicked
+        // TODO add your handling code here:
+        b = 1;
+    }//GEN-LAST:event_cartaoMouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        if (b == 2){
+            loja.executarCompra(preco, new PagamentoBoleto());
+        }
+        if (c == 1){
+            loja.executarCompra(preco, (PagamentoCommand) new PagamentoCartaoCredito());
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -206,12 +232,13 @@ public class FinalizarCompra extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton boleto;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JRadioButton cartao;
+    private javax.swing.JButton jButton1;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JLabel valTotal;
     // End of variables declaration//GEN-END:variables
 }

@@ -30,8 +30,8 @@ public class Loja {
         Compra compra = new Compra(nomeDaLoja);
         compra.setValor(valor);
         formaDePagamento.processarCompra(compra);
-        /*Conexao connection = Conexao.getInstance();
-        String sql = "insert into vendas (id, codP, data, codU) values (?,?,?,?)";
+       /* Conexao connection = Conexao.getInstance();
+        String sql = "insert into vendas ( data, valtotal) values (?,?,?)";
         try {
             PreparedStatement stm = connection.getConnection().prepareStatement(sql);
             stm.setInt(1,v.cod);

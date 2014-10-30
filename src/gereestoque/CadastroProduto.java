@@ -6,19 +6,23 @@
 
 package gereestoque;
 
+import DAO.FornecedorDAO;
 import DAO.ProdutoDAO;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import model.Fornecedor;
 
 /**
  *
  * @author tamara
  */
 public class CadastroProduto extends javax.swing.JFrame {
-
+    Fornecedor f;
+    private int codFor;
     /**
      * Creates new form CadastroProduto
      */
@@ -54,7 +58,7 @@ public class CadastroProduto extends javax.swing.JFrame {
         cad_qntP = new javax.swing.JTextField();
         cad_qdtMinP = new javax.swing.JTextField();
         cad_codForP = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        busca_for = new javax.swing.JButton();
         cadastroProduto = new javax.swing.JToggleButton();
         jToggleButton2 = new javax.swing.JToggleButton();
 
@@ -72,7 +76,17 @@ public class CadastroProduto extends javax.swing.JFrame {
 
         jLabel5.setText("Validade:");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/pesquisa.png"))); // NOI18N
+        busca_for.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/pesquisa.png"))); // NOI18N
+        busca_for.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                busca_forMouseClicked(evt);
+            }
+        });
+        busca_for.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                busca_forActionPerformed(evt);
+            }
+        });
 
         cadastroProduto.setText("Cadastrar");
         cadastroProduto.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -130,7 +144,7 @@ public class CadastroProduto extends javax.swing.JFrame {
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cad_validadeP, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(busca_for, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(75, 75, 75))
         );
         layout.setVerticalGroup(
@@ -156,7 +170,7 @@ public class CadastroProduto extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(cad_codForP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jButton1))
+                    .addComponent(busca_for))
                 .addGap(90, 90, 90)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cadastroProduto)
@@ -173,6 +187,7 @@ public class CadastroProduto extends javax.swing.JFrame {
         float preco = Float.parseFloat(this.cad_precoP.getText());
         int qntM =  Integer.parseInt(this.cad_qdtMinP.getText());
         int qnt =  Integer.parseInt(this.cad_qntP.getText());
+        int codFor =  Integer.parseInt(this.cad_codForP.getText());
         String data = this.cad_validadeP.getText();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");  
         java.sql.Date validade = null; 
@@ -183,12 +198,25 @@ public class CadastroProduto extends javax.swing.JFrame {
         }
         //int codFor =  Integer.parseInt(this.cad_codForP.getText());
         ProdutoDAO produto = new ProdutoDAO();
-        produto.cadastrarProduto(nomeP, qnt, qntM, preco, validade);
+        produto.cadastrarProduto(nomeP, qnt, qntM, preco, validade,codFor);
     }//GEN-LAST:event_cadastroProdutoMouseClicked
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
             this.Limpar();
     }//GEN-LAST:event_jToggleButton2ActionPerformed
+
+    private void busca_forActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busca_forActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_busca_forActionPerformed
+
+    private void busca_forMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_busca_forMouseClicked
+        // TODO add your handling code here:
+        Integer num = Integer.parseInt(busca_for.getText());
+        FornecedorDAO dao = new FornecedorDAO();
+        this.f = dao.buscaFornecedor(num);
+        
+        
+    }//GEN-LAST:event_busca_forMouseClicked
 
     /**
      * @param args the command line arguments
@@ -227,6 +255,7 @@ public class CadastroProduto extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LnomeP;
+    private javax.swing.JButton busca_for;
     private javax.swing.JTextField cad_NomeP;
     private javax.swing.JTextField cad_codForP;
     private javax.swing.JTextField cad_precoP;
@@ -234,7 +263,6 @@ public class CadastroProduto extends javax.swing.JFrame {
     private javax.swing.JTextField cad_qntP;
     private javax.swing.JTextField cad_validadeP;
     private javax.swing.JToggleButton cadastroProduto;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

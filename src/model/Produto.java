@@ -19,7 +19,7 @@ public class Produto {
     public int qntM;
     public float preco;
     public int codFor;
-    public Date validade;
+    public String validade;
     
     
 }

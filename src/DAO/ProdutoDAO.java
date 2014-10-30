@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.Fornecedor;
 import model.Produto;
 
 /**
@@ -20,18 +21,19 @@ import model.Produto;
  * @author tamara
  */
 public class ProdutoDAO {
+
     
-    public void cadastrarProduto(String nome, int qnt, int qntM, float preco, Date validade){
+    public void cadastrarProduto(String nome, int qnt, int qntM, float preco, Date validade, int codFor){
          Conexao connection = Conexao.getInstance();
-    String sql = "insert into produto (nome, qtd, qdtM, preco, validade) values (?,?,?,?,?)";
+    String sql = "insert into produto (nome, qtd, qdtM, preco, validade,cod_for) values (?,?,?,?,?)";
     try {
         PreparedStatement stm = connection.getConnection().prepareStatement(sql);
         stm.setString(1,nome);
-        //stm.setInt(6, codFor);
         stm.setInt(2, qnt);
         stm.setInt(3, qntM);
         stm.setFloat(4, preco);
         stm.setDate(5, validade);
+        stm.setInt(6, codFor);
         stm.executeUpdate();
         JOptionPane.showMessageDialog(null, "Produto cadastrado!");
         System.out.println("Dados Inseridos!");
@@ -64,6 +66,7 @@ public class ProdutoDAO {
         
         return p;
     }
+
     
     
 }
