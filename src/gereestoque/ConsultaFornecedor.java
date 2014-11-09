@@ -6,7 +6,7 @@
 
 package gereestoque;
 
-import DAO.Conexao;
+import Singleton.Conexao;
 import DAO.FornecedorDAO;
 import DAO.ProdutoDAO;
 import java.sql.PreparedStatement;

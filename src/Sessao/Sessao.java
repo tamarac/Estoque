@@ -4,18 +4,15 @@
  * and open the template in the editor.
  */
 
-package model;
+package Sessao;
 
-import java.sql.Date;
-
+import model.Usuario;
 
 /**
  *
  * @author tamara
  */
-public class Venda {
-   public int cod;
-   public Date dataV;
-   public double valorTotal; 
-   
+public class Sessao {
+    public static Usuario user;
+    
 }

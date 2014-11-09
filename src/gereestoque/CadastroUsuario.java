@@ -7,6 +7,7 @@
 package gereestoque;
 
 import DAO.ProdutoDAO;
+import Sessao.Sessao;
 import DAO.UsuarioDAO;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

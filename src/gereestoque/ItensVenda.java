@@ -9,6 +9,7 @@ package gereestoque;
 import DAO.ProdutoDAO;
 import model.Produto;
 import iterator.ProdutosCompra;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -191,7 +192,14 @@ public class ItensVenda extends javax.swing.JFrame {
 
     private void add_pMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_pMouseClicked
         // TODO add your handling code here:
-         pc.lista.add(p);
+         
+        if(p.qnt != 0){
+           pc.lista.add(p);    
+        }
+        else {
+         JOptionPane.showMessageDialog(null,"Produto em falta!");
+        }
+        
     }//GEN-LAST:event_add_pMouseClicked
         
     /**

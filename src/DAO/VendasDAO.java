@@ -6,32 +6,29 @@
 
 package DAO;
 
+import Singleton.Conexao;
+import Sessao.Sessao;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-
+import model.Venda;
 /**
  *
  * @author tamara
  */
 public class VendasDAO {
-    int cod;
-    int codP;
-    Date dataV;
-    int codU;
     
-    public void registrarVendas(int cod,int codP,Date dataV, int codU){
+    public Venda registrarVendas(Venda v){
+        int cod = Sessao.user.codUsuario;
          Conexao connection = Conexao.getInstance();
-    String sql = "insert into vendas (id, codP, data, codU) values (?,?,?,?)";
+    String sql = "insert into vendas (dataV,valorVenda, codU) values (?,?,?)";
     try {
         PreparedStatement stm = connection.getConnection().prepareStatement(sql);
-        stm.setInt(1,cod);
-        stm.setInt(2,codP);
-        stm.setDate(3,dataV);
-        stm.setInt(4,codU);
+        stm.setDate(1,v.dataV);
+        stm.setDouble(2,v.valorTotal);
+        stm.setInt(3, cod);
         stm.executeUpdate();
-        JOptionPane.showMessageDialog(null, "Venda Registrada!");
         
     }catch(SQLException e){
         System.out.println("ERRO:"+ e);
@@ -39,6 +36,7 @@ public class VendasDAO {
     finally {
         connection.destroy();
     }
+        return v;
   }   
    
 }

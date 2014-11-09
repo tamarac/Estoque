@@ -6,10 +6,11 @@
 
 package DAO;
 
-import java.sql.Date;
+import Singleton.Conexao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -23,17 +24,17 @@ import model.Produto;
 public class ProdutoDAO {
 
     
-    public void cadastrarProduto(String nome, int qnt, int qntM, float preco, Date validade, int codFor){
+    public void cadastrarProduto(Produto p){
          Conexao connection = Conexao.getInstance();
     String sql = "insert into produto (nome, qtd, qdtM, preco, validade,cod_for) values (?,?,?,?,?)";
     try {
         PreparedStatement stm = connection.getConnection().prepareStatement(sql);
-        stm.setString(1,nome);
-        stm.setInt(2, qnt);
-        stm.setInt(3, qntM);
-        stm.setFloat(4, preco);
-        stm.setDate(5, validade);
-        stm.setInt(6, codFor);
+        stm.setString(1,p.nomeP);
+        stm.setInt(2,p.qnt);
+        stm.setInt(3,p.qntM);
+        stm.setFloat(4,p.preco);
+        stm.setString(5,p.validade);
+        stm.setInt(6,p.codFor);
         stm.executeUpdate();
         JOptionPane.showMessageDialog(null, "Produto cadastrado!");
         System.out.println("Dados Inseridos!");
@@ -59,6 +60,10 @@ public class ProdutoDAO {
                 p.codP = rs.getInt("id");
                 p.nomeP = rs.getString("nome");
                 p.preco = rs.getFloat("preco");
+                p.qnt = rs.getInt("qtd");
+                p.qntM = rs.getInt("qdtM");
+                p.validade = rs.getString("validade");
+                p.codFor = rs.getInt("cod_for");
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -66,6 +71,22 @@ public class ProdutoDAO {
         
         return p;
     }
+   public void descontaProduto(int id){
+       Produto p = new Produto();
+       Conexao connection = Conexao.getInstance();
+            String sql = "UPDATE produto SET qtd = qtd - 1 WHERE id = ? ";
+        try {
+            PreparedStatement stm = connection.getConnection().prepareStatement(sql);
+            stm.setInt(1,id);        
+            stm.executeUpdate();
+            
+        }catch(SQLException e){
+            System.out.println("ERRO:"+ e);
+        }
+        finally {
+            connection.destroy();
+        }
+   }
 
     
     

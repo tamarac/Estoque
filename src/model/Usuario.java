@@ -6,7 +6,7 @@
 
 package model;
 
-import DAO.Conexao;
+import Singleton.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -17,11 +17,11 @@ import java.sql.Statement;
  * @author tamara
  */
 public class Usuario {
-    int codUsuario;
-    String nomeUsuario;
-    String user;
-    String password;
-    String role;
+   public int codUsuario;
+   public String nomeUsuario;
+   public String user;
+   public String password;
+   public String role;
  
          
     

@@ -9,9 +9,16 @@ package gereestoque;
 import Command.Loja;
 import Command.PagamentoBoleto;
 import Command.PagamentoCartaoCredito;
+import Singleton.Conexao;
+import DAO.ProdutoDAO;
+import DAO.VendasDAO;
 import interfaces.IteradorInterface;
 import interfaces.PagamentoCommand;
 import iterator.ProdutosCompra;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import model.Venda;
 
 /**
  *
@@ -21,20 +28,21 @@ public class FinalizarCompra extends javax.swing.JFrame {
     double preco = 0;
     Loja loja = new Loja();
     int b,c;
+    ProdutosCompra produtoCompra;
     /**
      * Creates new form FinalizarCompra
      */
     public FinalizarCompra() {
         initComponents();
-        valTotal.setText("oi");
     }
     public FinalizarCompra(ProdutosCompra pc) {
         initComponents();
-        
-       
+       produtoCompra = pc; 
         for (IteradorInterface it = pc.criarIterator(); !it.isDone(); it.next()) {
             preco += it.currentItem().preco;
+            
         }
+        
         valTotal.setText(String.valueOf(preco));
     }
    
@@ -117,6 +125,11 @@ public class FinalizarCompra extends javax.swing.JFrame {
                 jButton1MouseClicked(evt);
             }
         });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -194,7 +207,21 @@ public class FinalizarCompra extends javax.swing.JFrame {
         if (c == 1){
             loja.executarCompra(preco, (PagamentoCommand) new PagamentoCartaoCredito());
         }
+        ProdutoDAO pDAO =new ProdutoDAO();
+        VendasDAO  venda = new VendasDAO();
+        Venda v = new Venda();
+        for (IteradorInterface it = produtoCompra.criarIterator(); !it.isDone(); it.next()) {
+            
+            pDAO.descontaProduto(it.currentItem().codP);
+            
+        }
+        v.valorTotal = this.preco;
+        venda.registrarVendas(v);
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

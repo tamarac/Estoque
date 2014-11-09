@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.Fornecedor;
+import model.Produto;
 
 /**
  *
@@ -183,22 +184,15 @@ public class CadastroProduto extends javax.swing.JFrame {
 
     private void cadastroProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastroProdutoMouseClicked
         // TODO add your handling code here:
-        String nomeP = this.cad_NomeP.getText();
-        float preco = Float.parseFloat(this.cad_precoP.getText());
-        int qntM =  Integer.parseInt(this.cad_qdtMinP.getText());
-        int qnt =  Integer.parseInt(this.cad_qntP.getText());
-        int codFor =  Integer.parseInt(this.cad_codForP.getText());
-        String data = this.cad_validadeP.getText();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");  
-        java.sql.Date validade = null; 
-        try {
-            validade = new java.sql.Date(format.parse(data).getTime());
-        } catch (ParseException ex) {
-            Logger.getLogger(CadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        //int codFor =  Integer.parseInt(this.cad_codForP.getText());
+        Produto p = new Produto();
+        p.nomeP = this.cad_NomeP.getText();
+        p.preco= Float.parseFloat(this.cad_precoP.getText());
+        p.qntM =  Integer.parseInt(this.cad_qdtMinP.getText());
+        p.qnt =  Integer.parseInt(this.cad_qntP.getText());
+        p.codFor =  Integer.parseInt(this.cad_codForP.getText());
+        p.validade = this.cad_validadeP.getText();
         ProdutoDAO produto = new ProdutoDAO();
-        produto.cadastrarProduto(nomeP, qnt, qntM, preco, validade,codFor);
+        produto.cadastrarProduto(p);
     }//GEN-LAST:event_cadastroProdutoMouseClicked
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
